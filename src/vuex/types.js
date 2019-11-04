@@ -1,0 +1,3 @@
+//暴露常量
+export const TEST_INCREMENT='TEST_INCREMENT'
+export const TEST_DEREMENT='TEST_DEREMENT'
