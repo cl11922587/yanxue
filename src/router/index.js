@@ -10,7 +10,7 @@ var news = () => import('@/pages/news/news');
 var person = () => import('@/pages/person/person');
 var orderList = () => import('@/pages/person/orderList');
 var orderDetail = () => import('@/pages/person/orderDetail');
-
+var login = () => import('@/components/login');
 Vue.use(Router);
 
 
@@ -90,6 +90,12 @@ const router= new Router({
       name: 'orderDetail',
       component: orderDetail,
       meta: { title: "研学订单详情" },
+    }
+    ,{
+      path: '/login',
+      name: 'login',
+      component: login,
+      meta: { title: "登录" },
     }
   ]
 })

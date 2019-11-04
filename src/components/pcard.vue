@@ -1,12 +1,12 @@
 <template>
   <div  >
-    <a :class="[pone?'p-item-one':'p-item']" :href="'#/product/'+item.id" :key="item.id">
+    <a  class="p-item" :href="'#/product/'+item.id" :key="item.id">
       <div class="img-box">
         <img :src="item.img" class="img"  v-lazy="item.img">
       </div>
       <div class="p-info">
         <h2>{{item.name}}</h2>
-        <div class="p-desc"><span class="em" v-for="(pds,key) in JSON.parse(item.desc)">{{pds}}</span></div>
+        <div class="p-desc"><span class="em" v-for="(pds,key) in JSON.parse(item.desc||'{}')">{{pds}}</span></div>
         <div class="p-price"><span class="font12">￥</span>{{item.price | priceDoubel}}</div>
       </div>
     </a>
@@ -17,8 +17,9 @@ import "swiper/dist/css/swiper.css";
 import {swiper,swiperSlide } from "vue-awesome-swiper";
   export default {
     name: 'pcard',
-    props:['guoneiData','pone'],
+    props:['guoneiData'],
     mounted(){
+
     },
     data () {
       return {

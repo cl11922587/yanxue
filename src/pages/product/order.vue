@@ -1,55 +1,111 @@
 <template>
   <div>
-    <Pcard  v-bind:guoneiData ="proInfoList" :pone="true"></Pcard>
+    <a  class="p-item" :href="'#/product/'+proInfo.id" :key="proInfo.id">
+    <div class="img-box">
+      <img :src="proInfo.img" class="img"  v-lazy="proInfo.img">
+    </div>
+    <div class="p-info">
+      <h2>{{proInfo.name}}</h2>
+      <div class="p-desc"><span class="em" v-for="(pds,key) in JSON.parse(proInfo.desc||'{}')">{{pds}}</span></div>
+      <div class="p-price"><span class="font12">￥</span>{{proInfo.price | priceDoubel}}</div>
+    </div>
+    </a>
     <div class="numBox mgb10 ">
       <div class="mgb15">
       购买数量：
-        <mu-button   small  fab color="blue"  v-on:click ="delnum()">
-        <mu-icon value="remove" ></mu-icon>
-        </mu-button>
+        <van-button   size="small"   color="#ff6600"  v-on:click ="delnum()"><span class="font20">-</span></van-button>
         <input type="number" v-model="orderInfo.student.length" class="numinput" >
-        <mu-button   small fab color="blue" v-on:click ="addnum()">
-        <mu-icon value="add" ></mu-icon>
-      </mu-button>
+        <van-button    size="small"  fab color="#ff6600"  v-on:click ="addnum()"><span class="font20">+</span></van-button>
       </div>
       <div class=" mgb15">
         合计价格：<span class="c-ff6600" ><span class="font12">￥</span><span class="bold">{{getAllPrice | priceDoubel}}</span></span>
       </div>
-      <mu-checkbox v-model="orderInfo.comfigs" :label="'我已知晓并同于《研学服务协议》'"></mu-checkbox>
+      <van-checkbox v-model="orderInfo.comfigs" >我已知晓并同于《研学服务协议》 </van-checkbox>
     </div>
     <div class="student-box mgb10">
       <div class="student-item" v-for="(item,key) in orderInfo.student">
         <div  class="student-title">学生{{key +1}}</div><span class="student-del" v-on:click="delStudent(key)">x</span>
         <div class="student-list">
-          <mu-text-field  v-model="item.name" type="text"  placeholder="姓名"  icon="account_circle" full-width></mu-text-field>
-          <mu-select  v-model="item.cardType" icon="grade"  full-width>
-            <mu-option v-for="(option,index) in options" :key="index" :label="option" :value="option"></mu-option>
-          </mu-select>
-          <mu-text-field :max-length="18" v-model="item.cardId" placeholder="证件号码"  icon="comment" full-width></mu-text-field>
-          <mu-text-field  :max-length="11" v-model="item.phone"  placeholder="手机号码"  icon="phone" full-width></mu-text-field>
+          <van-field required
+                     clearable
+                     v-model="item.name"
+                     label="姓名"
+                     error-message=""
+                     placeholder="请输入姓名" >
+          </van-field>
+          <van-field required
+                     clearable
+                     maxlength="18"
+                     label="证件号码"
+                     error-message=""
+                     placeholder="请输入证件号码"
+                     v-model="item.cardId">
+          </van-field>
+          <van-field  required
+                      clearable
+                      maxlength="11"
+                      label="手机号码"
+                      error-message=""
+                      placeholder="请输入手机号码"
+                      v-model="item.phone" >
+          </van-field>
         </div>
       </div>
     </div>
-    <div class="teacher-box mgb10">
+    <div class="teacher-box mgb60">
       <div  class="student-title">联系人信息</div>
       <div class="student-list">
-        <mu-text-field v-model="orderInfo.teacher.name" placeholder="姓名"  icon="account_circle" full-width></mu-text-field>
-        <mu-text-field  :max-length="11" v-model="orderInfo.teacher.phone"  placeholder="手机号码"  icon="phone" full-width></mu-text-field>
-        <mu-row gutter>
-          <mu-col span="8">
-            <div class="grid-cell"><mu-text-field :max-length="6" v-model="orderInfo.teacher.ver" placeholder="验证码"  icon="help" full-width></mu-text-field></div>
-          </mu-col>
-          <mu-col span="4"><mu-button color="success" full-width>验证码</mu-button></mu-col>
-        </mu-row>
-        <mu-text-field  :max-length="200" icon="comment" v-model="orderInfo.teacher.remark" placeholder="备注信息" multi-line :rows="3" :rows-max="6" full-width></mu-text-field>
+        <van-field required
+                   clearable
+                   label="姓名"
+                   error-message=""
+                   placeholder="请输入联系人姓名"
+                   v-model="orderInfo.teacher.name">
+        </van-field>
+        <van-field  required
+                    clearable
+                    error-message=""
+                    maxlength="11"
+                    label="手机号码"
+                    placeholder="请输入手机号码"
+                    v-model="orderInfo.teacher.phone">
+        </van-field>
+        <van-field
+          v-model="orderInfo.teacher.ver"
+          center
+          error-message=""
+          maxlength="6"
+          clearable
+          label="短信验证码"
+          placeholder="请输入短信验证码"
+        >
+          <van-button slot="button" size="small" type="primary">发送验证码</van-button>
+        </van-field>
+        <van-field
+          v-model="orderInfo.teacher.remark"
+          rows="1"
+          maxlength="200"
+          show-word-limit
+          autosize
+          error-message=""
+          label="备注"
+          type="textarea"
+          placeholder="请输入备注"
+        />
       </div>
     </div>
-    <Footerbar :pid="proInfo.pid" submitorder = "true" :allprice ="getAllPrice"></Footerbar>
+    <van-submit-bar
+      :price="getAllPrice*100"
+      button-text="提交订单"
+      @submit="onSubmit"
+    />
+    <!--<Footerbar :pid="proInfo.pid" submitorder = "true" :allprice ="getAllPrice"></Footerbar>-->
   </div>
 </template>
 
 
 <script>
+  import  getDate from '../../server/getDate'
   export default {
     name: 'Index',
     components:{
@@ -57,19 +113,19 @@
     },
     data () {
       return {
-        proInfo:{pimgs:[{image:'/static/image/banner.jpg',title:'111'},{image:'/static/image/banner.jpg',title:'222'}],pid:'123',pname:'精品研学精品研学精品研学精品研学精品研学',pdesc:['精品研学','研学经典'],price:'6999',quality:[{type:1,val: '课程介绍'},{type:1,val: '课程介绍'},{type:1,val: '课程介绍'}],content:'<div>是</div>',img:"/static/image/pic1.jpg"},
+        proInfo:{},
         msg: '',
         orderInfo:{comfigs:[true],student:[{name:'',cardType:'身份证',cardId:'',phone:''}],teacher:{name:'',phone:'',ver:'',remark:''}},
         allprice:0,
-        proInfoList:[],
         options : ['身份证','学生证']
       }
 
     },
     mounted(){
-      this.allprice = this.proInfo.price;
-      this.proInfoList.push(this.proInfo);
-
+     // this.allprice = this.proInfo.price;
+    },
+    created() {
+      this.getProductInfo();
     },
     computed:{
       getAllPrice:function(){
@@ -77,6 +133,17 @@
       }
     },
     methods:{
+       getProductInfo() {
+        getDate.getProDetail({id:this.$route.params.id},(e)=>{
+          if(e.success){
+            this.proInfo =e.data.results;
+            this.allprice = e.data.results.price;
+          }
+        },(e)=>{
+
+        })
+
+      },
         addnum:function(){
           this.orderInfo.student.push({name:'',cardType:'身份证',cardId:'',phone:''});
         },
@@ -89,14 +156,87 @@
             return;
           }
           this.orderInfo.student.splice(index,1)
-      }
+      },
+      onSubmit(){
+         if(!this.orderInfo.comfigs){
+           this.$toast('请确认服务协议！');
+           return;
+         }
+      },
+
     }
 
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
+<style  scoped>
+  .p-item{
+    margin: 10px;
+    border:1px solid #ccc;
+    background: #fff;
+    padding: 10px 10px 10px 170px;
+    overflow: hidden;
+    zoom:1;
+    clear: both;
+    display: block;
+    position: relative;
+  }
+  .p-item-one{
+    border-bottom:1px solid #ccc;
+    background: #fff;
+    padding: 10px 10px 10px 170px;
+    overflow: hidden;
+    zoom:1;
+    clear: both;
+    display: block;
+    position: relative;
+  }
+  .img-box{
+    width:150px;
+    height: 100%;
+    position: absolute;
+    left: 10px;
+    top:10px;
+    overflow: hidden;
+  }
+  .img-box .img{
+    width: 100%;
+    height: auto;
+  }
+  .p-info{
+    width:100%;
+    min-height:105px;
+  }
+  .p-info h2{
+    font-size: 14px;
+    margin: 0 0 5px 0;
+    line-height: 20px;
+    min-height: 40px;
+    width: 100%;
+    overflow: hidden;
+    height: 40px;
+  }
+  .p-price{
+    position: absolute;
+    bottom: 10px;
+    right:10px;
+    color:#ff0000;
+    font-size: 18px;
+  }
+  .p-desc{
+
+  }
+  .p-desc .em{
+    font-size: 12px;
+    background: #ff6600;
+    color:#fff;
+    text-align: center;
+    padding: 2px 5px;
+    display: inline-block;
+    margin: 0 3px;
+    border-radius: 3px;
+  }
   body{ text-align: left}
  .numBox{padding: 10px;text-align: left; background: #fff ;}
   .numBox .addnum{ width:31px; height:31px; border: 1px solid #ccc; border-radius: 5px; display: inline-block;}

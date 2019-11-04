@@ -23,7 +23,6 @@ import {swiper,swiperSlide } from "vue-awesome-swiper";
     },
     watch: {
       imgdata(val) {
-        console.log(val);
         this.imgdatas = JSON.parse(val);
       }
     },

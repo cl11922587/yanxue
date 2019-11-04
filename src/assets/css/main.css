@@ -453,6 +453,12 @@ ul,li,ol{
 .mgb20{
   margin-bottom: 20px;
 }
+.mgb40{
+   margin-bottom: 40px;
+ }
+.mgb60{
+  margin-bottom: 60px;
+}
 .mgb5{
   margin-bottom: 10px;
 }
@@ -474,6 +480,9 @@ ul,li,ol{
 .tr{ text-align: right;}
 .pull-right{ float: right;}
 .pull-left{ float: left;}
+.font20{
+  font-size: 20px;
+}
 /*
 引入MaterialIcons 字体
 */

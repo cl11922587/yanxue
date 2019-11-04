@@ -2,7 +2,7 @@
   <van-tabbar v-model="active">
     <van-tabbar-item icon="home-o" to="index">首页</van-tabbar-item>
     <van-tabbar-item icon="search"  to="newsList">新闻</van-tabbar-item>
-    <van-tabbar-item icon="friends-o">个人中心</van-tabbar-item>
+    <van-tabbar-item icon="friends-o" to="person">个人中心</van-tabbar-item>
   </van-tabbar>
 </template>
 <style>

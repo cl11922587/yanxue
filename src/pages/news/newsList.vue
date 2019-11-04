@@ -1,5 +1,5 @@
 <template>
-  <div  data-mu-loading-overlay-color="rgba(0, 0, 0, .7)"  data-mu-loading-color="secondary">
+  <div >
     <Footer-Tab activeItem="1"></Footer-Tab>
 
     <van-tabs v-model="active" animated>

@@ -1,29 +1,31 @@
 <template>
-  <div>
+  <div >
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+    <van-search
+      v-model="value"
+      placeholder="请输入搜索关键词"
+      show-action
+      shape="round"
+      @search="onSearch"
+    >
+      <div slot="action" @click="onSearch">搜索</div>
+    </van-search>
     <Carousel></Carousel>
     <FooterTab activeItem="0"></FooterTab>
     <van-tabs v-model="active" animated>
-      <van-tab title="全部">
+      <van-tab title="研学产品">
         <van-list
           v-model="loading"
           :finished="finished"
           finished-text="没有更多了"
           @load="onLoad"
         >
-        <Pcard class=""  v-for="item in guoneiData"   v-bind:guoneiData="item"  ></Pcard>
+            <Pcard class=""  v-for="item in guoneiData"   v-bind:guoneiData="item"  ></Pcard>
         </van-list>
       </van-tab>
-      <van-tab title="国内研学">
-        <Pcard   v-for="item in guoneiData2"   v-bind:guoneiData="item"  v-if="guoneiData2.length>0"></Pcard>
-        <Nodate  v-if="guoneiData2.length<=0"></Nodate>
-      </van-tab>
-      <van-tab title="国际研学">
-        <Pcard  v-for="item in guoneiData3"    v-bind:guoneiData="item" v-if="guoneiData3.length>0"></Pcard>
-        <Nodate  v-if="guoneiData3.length<=0"></Nodate>
-      </van-tab>
     </van-tabs>
+    </van-pull-refresh>
   </div>
-
 </template>
 
 
@@ -34,12 +36,14 @@
     name: 'Index',
     components: {},
     created() {
-   //   this.getProductList(this.limit, this.page, this.ptype);
     },
     data() {
       return {
         msg: '',
+        value:'',
         isBack: false,
+        isLoading:false,
+        show:true,
         active: 0,
         limit: 4,
         page: 0,
@@ -47,25 +51,16 @@
         loading: false,
         finished: false,
         guoneiData: [],
-        guoneiData2: [],
-        guoneiData3: [],
         total:100
       }
     },
     methods: {
       getProductList: function (limit, page, type) {
-        var _this = this;
         getDate.getIndexList({limit:limit,page:page,type:type},(response)=>{
           if (response.success) {
                 if (type == 1) {
                   this.guoneiData.push(...response.data.results.rows);
                   this.total =response.data.results.count;
-                }
-                if (type == 2) {
-                  this.guoneiData2.push(...response.data.results.rows);
-                }
-                if (type == 2) {
-                  this.guoneiData3.push(...response.data.results.rows);
                 }
               }
         },(exception)=>{
@@ -90,10 +85,23 @@
             this.getProductList(this.limit,this.page,this.ptype);
             this.loading = false;
           }else{
-            console.log(1);
             this.finished=true;
             this.loading = false;
           }
+      },
+      onSearch(){
+
+      },
+      onRefresh(){
+        setTimeout(()=>{
+          this.guoneiData.splice(0,this.guoneiData.length);
+          this.page =1;
+          this.$toast('刷新成功');
+          this.isLoading = false;
+          this.getProductList(this.limit,this.page,this.ptype);
+          this.finished=false;
+        },1000)
+
       }
     }
   }

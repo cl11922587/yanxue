@@ -30,6 +30,13 @@ export  default {
          exception(e)
        })
 
-     }
+     },
+    postLogin(data,response,exception){
+      http.post(api.index.login,data,(e)=>{
+        response(e);
+      },(e)=>{
+        exception(e)
+      })
+    }
 }
 

@@ -3,20 +3,20 @@
     <ProductImg v-bind:imgdata = "proInfo.imgArray"></ProductImg>
     <div class="p-info mgb10">
       <h2>{{proInfo.name}}</h2>
-      <!--<div class="p-desc"><span class="em" v-for="(pds,key) in JSON.parse(proInfo.desc)">{{pds}}</span></div>-->
+      <div class="p-desc"><span class="em" v-for="(pds,key) in JSON.parse(proInfo.desc||'{}')">{{pds}}</span></div>
       <div class="p-price"><span class="font12">￥</span>{{proInfo.price | priceDoubel}}</div>
     </div>
     <div class="p-quality mgb10">
-      <!--<ul>-->
-        <!--<li v-for="(item,key) in JSON.parse(proInfo.quality)">●&nbsp;{{item.val}}</li>-->
-      <!--</ul>-->
+      <ul>
+        <li v-for="(item,key) in JSON.parse(proInfo.quality||'{}')">●&nbsp;{{item.val}}</li>
+      </ul>
     </div>
-    <!--<div class="p-content mgb10" v-html="proInfo.content">-->
+    <div class="p-content mgb60" v-html="proInfo.content||''">
+    </div>
 
-    <!--</div>-->
     <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服"  />
-      <van-goods-action-button type="danger" text="立即预订"  to=""/>
+      <van-goods-action-icon icon="chat-o" text="客服"  url="tel:8852252" />
+      <van-goods-action-button type="danger" text="立即预订" @click="goOrder(proInfo)" />
     </van-goods-action>
   </div>
 </template>
@@ -24,6 +24,7 @@
 
 <script>
   import  getDate from '../../server/getDate'
+  import {mapActions,mapState} from 'vuex'
   export default {
     name: 'Index',
     components: {},
@@ -33,21 +34,32 @@
         msg: ''
       }
     },
+    computed: {
+      ...mapState(["userInfo"])
+    },
     created() {
       this.getProductInfo();
     },
     methods: {
-      async  getProductInfo(limit, page, type) {
-        const _this = this;
-        await getDate.getProDetail({id:this.$route.params.id},(e)=>{
+        getProductInfo() {
+        getDate.getProDetail({id:this.$route.params.id},(e)=>{
            if(e.success){
-             _this.proInfo =e.data.results;
+             this.proInfo =e.data.results;
            }
          },(e)=>{
 
          })
 
       },
+      goOrder(data){
+          if(this.userInfo.token){
+            this.$router.push('/order/'+data.id+'');
+          }else{
+            this.$router.push('/login?page=/order/'+data.id);
+          }
+
+
+      }
     }
   }
 </script>
@@ -59,11 +71,10 @@
  }
  .p-info{
    padding: 10px;
-   min-height:105px;
+   max-height:105px;
    text-align: left;
    position: relative;
    line-height: 20px;
-   margin-bottom: 20px;
    background: #fff;
  }
  .p-info h2{
@@ -99,8 +110,9 @@
   }
   .p-quality li{
     text-align: left;
-    color:#008800;
+    color:#333;
     font-size: 14px;
+    line-height: 25px;
   }
   .p-content{
       color:#333;

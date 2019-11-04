@@ -4,7 +4,8 @@ export  default {
          proDetail:'product/product',
         banner:'publics/banner',
         newList:'new/newList',
-         newDetail:'new/newDetail'
+         newDetail:'new/newDetail',
+         login:'user/login'
     }
 
 }
