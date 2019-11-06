@@ -3,6 +3,22 @@ import axios from 'axios';
 const TIME_OUT_MS = 60 * 1000 // 默认请求超时时间
 const BASE_URL = '//localhost:3000/';
 
+axios.interceptors.request.use(function(config) {
+  // 处理请求参数
+  config.data = JSON.stringify(config.data)
+
+  //将token写入请求头
+ // if (window.localStorage.getItem('token')) {
+    config.headers.Authorization =window.localStorage.getItem('userInfo')? `${JSON.parse(window.localStorage.getItem('userInfo')).token}`:{};
+  //}
+
+  return config;
+}, function(error) {
+  // 对请求错误做些什么
+  return Promise.reject(error);
+});
+
+
 /*
  * @param response 返回数据列表
  */
@@ -73,7 +89,7 @@ export default {
         if (exception) {
           exception(error)
         } else {
-          console.log(error)
+
         }
       }
     )
@@ -101,7 +117,7 @@ export default {
         if (exception) {
           exception(error)
         } else {
-          console.log(error)
+
         }
       }
     )
@@ -130,7 +146,7 @@ export default {
         if (exception) {
           exception(error)
         } else {
-          console.log(error)
+
         }
       }
     )

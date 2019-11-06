@@ -130,7 +130,11 @@
     computed:{
       getAllPrice:function(){
         return this.allprice*this.orderInfo.student.length;
-      }
+      },
+
+      phoneRight(phone){
+        return /^[1][3,4,5,7,8][0-9]{9}$/.test(phone)
+       },
     },
     methods:{
        getProductInfo() {
@@ -158,10 +162,22 @@
           this.orderInfo.student.splice(index,1)
       },
       onSubmit(){
-         if(!this.orderInfo.comfigs){
-           this.$toast('请确认服务协议！');
-           return;
-         }
+        if(!this.orderInfo.comfigs){
+          this.$toast('请确认服务协议！');
+          return;
+        }
+
+        getDate.postCreateOrder({productInfo:this.proInfo,orderInfo:this.orderInfo},(response)=>{
+          if (response.success) {
+            this.$toast(response.message);
+            this.$router.replace('/orderList');
+          }else{
+            this.$toast(response.message);
+          }
+        },(exception)=>{
+
+        })
+
       },
 
     }

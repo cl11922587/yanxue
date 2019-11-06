@@ -19,7 +19,6 @@ var orderStatus =function (value) {
   }else if(value==5){
     return '已退款'
   }
-  return  (Math.floor(value*100)/100).toFixed(2);
 };
 
 var trimStr =function(value,trim){

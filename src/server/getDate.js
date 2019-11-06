@@ -37,6 +37,27 @@ export  default {
       },(e)=>{
         exception(e)
       })
-    }
+    },
+    postCreateOrder(data,response,exception){
+      http.post(api.index.creatOrder,data,(e)=>{
+        response(e);
+      },(e)=>{
+        exception(e)
+      })
+    },
+    getOrderList(data,response,exception){
+      http.get(api.index.orderList + '?limit=' + data.limit + '&page=' + data.page,(e)=>{
+        response(e);
+      },(e)=>{
+        exception(e)
+      })
+    },
+     getOrderDetail(data,response,exception){
+    http.get(api.index.orderDetail + '?id=' + data.id,(e)=>{
+      response(e);
+    },(e)=>{
+      exception(e)
+    })
+  }
 }
 

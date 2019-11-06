@@ -5,8 +5,19 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
 export default {
   name: 'App',
+  mounted(){
+    this.getUser();
+  },
+  methods:{
+    ...mapMutations(["INIT_USER_INFO"]),
+    getUser(){
+      // 清空本地的数据
+      this.INIT_USER_INFO();
+    }
+  }
 
 }
 </script>

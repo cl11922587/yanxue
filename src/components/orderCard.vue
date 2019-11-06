@@ -1,7 +1,7 @@
 <template>
   <div class="order-box" >
-    <a :href="'#/orderDetail/'+orderInfo.orderNo">
-    <div class="order-no"><div class="pull-left"> 订单号：{{orderInfo.orderNo}}</div> <div class="full-right tr"> 完成时间：{{orderInfo.orderCreatTime}}</div></div>
+    <a :href="'#/orderDetail/'+orderInfo.id">
+    <div class="order-no"><div class="pull-left"> 订单号：{{orderInfo.id}}</div> <div class="full-right tr"> 完成时间：{{orderInfo.createTime  | forMat}}</div></div>
     <div  :class="'p-item'" >
       <div class="img-box">
         <img :src="orderInfo.pimg" class="img">
@@ -9,15 +9,17 @@
       <div class="p-info">
         <h2>{{orderInfo.pname}}</h2>
         <div class="p-desc">X{{orderInfo.num}}</div>
-        <div class="p-price"><span class="font12">￥</span>{{orderInfo.price | priceDoubel}}</div>
+        <div class="p-price"><span class="font12">￥</span>{{orderInfo.total | priceDoubel}}</div>
       </div>
     </div>
     <div>
-      <div class="order-status mgb20"><span class="c-ff6600 font14 bold">{{orderInfo.status | orderStatus}}</span>
+      <div class="order-status mgb20">
+        <span class="c-ff6600 font14 bold">{{orderInfo.state | orderStatus}}</span>
+        <van-button  class="pull-right order-button" color="red" size="small " v-show="orderInfo.state==1">立即支付</van-button>
       </div>
     </div>
     </a>
-    <mu-button  class="pull-right order-button" color="primary" v-show="orderInfo.status==1">立即支付</mu-button>
+
   </div>
 </template>
 <style scoped>
@@ -28,7 +30,7 @@
   }
   .order-button{
     position: absolute;
-    right: 10px ; bottom: 10px;
+    right: 10px ; bottom: 12px;
   }
   .order-no{
     background: #fff;
@@ -39,7 +41,6 @@
     background: #fff;
     padding: 10px;
     text-align: left;
-    height: 56px;
     line-height: 36px;
   }
   .p-item{

@@ -3,14 +3,14 @@ import Router from 'vue-router'
 import Index from '@/Index'
 
 //todo 需优化
-var product = () => import('@/pages/product/product');
-var newsList = () => import('@/pages/news/newsList');
-var order = () => import('@/pages/product/order');
-var news = () => import('@/pages/news/news');
-var person = () => import('@/pages/person/person');
-var orderList = () => import('@/pages/person/orderList');
-var orderDetail = () => import('@/pages/person/orderDetail');
-var login = () => import('@/components/login');
+const product = () => import('@/pages/product/product');
+const newsList = () => import('@/pages/news/newsList');
+const order = () => import('@/pages/product/order');
+const news = () => import('@/pages/news/news');
+const person = () => import('@/pages/person/person');
+const orderList = () => import('@/pages/person/orderList');
+const orderDetail = () => import('@/pages/person/orderDetail');
+const login = () => import('@/components/login');
 Vue.use(Router);
 
 
@@ -29,13 +29,14 @@ const router= new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
-      component: Index,
-      meta: { title: "研学首页" },
-      beforeEnter:function(to,from,next){
-          console.log(444);
-          next();
+      redirect: {
+        name: 'Index'
       },
+      meta: { title: "研学首页" },
+      // beforeEnter:function(to,from,next){
+      //     console.log(444);
+      //
+      // },
       // children:[
       //   {
       //     path:'newsList',
@@ -98,16 +99,15 @@ const router= new Router({
       meta: { title: "登录" },
     }
   ]
-})
+});
 
 //全局守卫
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {//如果设置标题，拦截后设置标题
     document.title = to.meta.title
   }
-
   next()
-})
+});
 
 //全局守卫
 // router.beforeRouteUpdate((to, from, next) => {
@@ -121,12 +121,12 @@ router.beforeResolve((to,from,next)=>{
 
   next()
 
-})
+});
 
 //全局后制钩子
 router.afterEach((to,from)=>{
 
-})
+});
 
 
 

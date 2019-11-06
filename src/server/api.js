@@ -5,7 +5,10 @@ export  default {
         banner:'publics/banner',
         newList:'new/newList',
          newDetail:'new/newDetail',
-         login:'user/login'
+         login:'user/login',
+        creatOrder:'order/create',
+        orderList:'order/orderList',
+         orderDetail:'order/orderDetail'
     }
 
 }

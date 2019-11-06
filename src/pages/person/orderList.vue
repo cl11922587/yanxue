@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div v-for="(item,index) in orderList">
-      <OrderCard v-bind:orderInfo ="item"></OrderCard>
-    </div>
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <OrderCard  v-for="(item,index) in orderList" v-bind:orderInfo ="item"></OrderCard>
+    </van-list>
   </div>
 </template>
 
 
 <script>
-
-
+  import  getDate from '../../server/getDate'
   export default {
     name: 'orderList',
     components:{
@@ -17,9 +21,16 @@
     },
     data () {
       return {
-        orderList:[{orderNo:'123',orderCreatTime:'2018-02-02',pimg:'/static/image/pic1.jpg',pname:'我是产品我是产品我是产品我是产品',num:'12',price:'3999',status:'1'},{orderNo:'123',orderCreatTime:'2018-02-02',pimg:'/static/image/pic1.jpg',pname:'我是产品',num:'12',price:'3999',status:'3'}]
+        orderList:[],
+        limit:10,
+        page:0,
+        loading:false,
+        finished:false,
+        total:11
       }
 
+    },
+    created(){
     },
     mounted(){
 
@@ -29,7 +40,35 @@
 
     },
     methods:{
+        getOrderList(){
+          getDate.getOrderList({limit:this.limit,page:this.page},(response)=>{
+            if(response.success){
+              this.orderList.push(...response.data.results.rows);
+              this.total = response.data.results.count
+            }
 
+          },()=>{
+
+          })
+
+        },
+        onLoad() {
+          if(this.total > this.page*this.limit){
+            this.page++;
+            if(this.page ==1){
+              this.getOrderList(this.limit,this.page);
+              this.loading = false;
+            }else{
+              setTimeout(()=>{
+                this.getOrderList(this.limit,this.page);
+                this.loading = false;
+              },500)
+            }
+          }else{
+            this.finished=true;
+            this.loading = false;
+          }
+  },
     }
 
   }

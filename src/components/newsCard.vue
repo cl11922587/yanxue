@@ -33,7 +33,6 @@
     height: auto;
   }
   .news-info{
-    width:100%;
     padding: 0 10px;
   }
   .news-info h2{

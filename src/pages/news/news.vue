@@ -1,10 +1,10 @@
 <template>
   <div class="news-box">
     <div class="news-name">{{newsInfo.name}}</div>
-    <div class="" v-html="newsInfo.content"></div>
-    <div class="font14 news-ready bor1-ccc mgb5"><span class="pull-right">{{newsInfo.creatTime | forMat}}</span><span class="pull-left">阅读（{{newsInfo.read}}）</span> </div>
-    <a class="tl font14 p5 db">上一篇：111</a>
-    <a  class="tl font14 p5 db">下一篇：222</a>
+    <div class="news-content" v-html="newsInfo.content"></div>
+    <div class="font14 news-ready c-666 bor1-e6e6e6 mgb5"><span class="pull-right">{{newsInfo.creatTime | forMat}}</span><span class="pull-left">阅读（{{newsInfo.read}}）</span> </div>
+    <!--<a class="tl font14 p5 db c-666">上一篇：111</a>-->
+    <!--<a  class="tl font14 p5 db c-666">下一篇：222</a>-->
   </div>
 </template>
 
@@ -47,20 +47,24 @@
   body{
     margin:0;
     padding: 0;
-
+    background: #fff!important;
   }
   .news-box{
    padding: 10px;
-    float: left;
+   background: #fff;
   }
-
   .news-name{
+    text-align: center;
     padding: 5px 0;
-  border-bottom: 1px  solid #ccc;
-    line-height: 20px;
+    border-bottom: 1px  solid #e6e6e6;
+    line-height: 30px;
+    font-size: 20px;
     margin-bottom: 10px;
     font-weight: bold;
 
+  }
+  .news-content{
+    margin-bottom: 20px;
   }
   .news-ready{
     clear: both;

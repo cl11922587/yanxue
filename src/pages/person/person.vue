@@ -40,14 +40,14 @@
       </router-link>
     </van-cell-group>
     <!--我的优惠券-->
-    <van-cell-group style="margin-top: 0.4rem">
-      <van-cell title="我的优惠券" icon="gold-coin" value="1张" is-link></van-cell>
-      <van-cell title="我的收货地址" icon="todo-list" is-link></van-cell>
-    </van-cell-group>
+    <!--<van-cell-group style="margin-top: 0.4rem">-->
+      <!--<van-cell title="我的优惠券" icon="gold-coin" value="0张" is-link></van-cell>-->
+      <!--<van-cell title="我的收货地址" icon="todo-list" is-link></van-cell>-->
+    <!--</van-cell-group>-->
     <!--联系客服-->
     <van-cell-group style="margin-top: 0.4rem">
       <van-cell title="联系客服" icon="phone" value="客服时间 07:00-22:00" is-link></van-cell>
-      <van-cell title="意见反馈" icon="smile-comment" is-link></van-cell>
+      <van-cell title="意见反馈" icon="smile-comment" is-link  @click="mout()"></van-cell>
     </van-cell-group>
     <!--路由的出口-->
     <transition name="router-slider" mode="out-in">
@@ -68,9 +68,9 @@
       return {
         orderData: [
           {icon: 'cart-circle-o', title: '待支付'},
-          {icon: 'gift-o', title: '待出行'},
+          {icon: 'logistics', title: '待出行'},
           {icon: 'smile-comment-o', title: '已出行'},
-          {icon: 'cash-back-record', title: '已完成'},
+          {icon: 'thumb-circle-o', title: '已完成'},
         ],
 
       }
@@ -89,6 +89,9 @@
         // 清空本地的数据
         this.RESET_USER_INFO();
         this.$toast('退出成功')
+      },
+      mout(){
+        this.$toast('敬请期待');
       }
     }
   }

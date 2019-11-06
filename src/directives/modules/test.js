@@ -4,7 +4,7 @@ export default{
 
   },
   inserted(el ,binding,vnode){
-    el.innerHTML='1111';
+
   },
   update(el,binding,vnode){
 

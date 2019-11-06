@@ -60,7 +60,6 @@
         getDate.postLogin({userName:this.user_name,pwd:this.pwd},(response)=>{
           if (response.success) {
               this.syncUserInfo(response.data);
-
               if(gopage){
                 this.$router.replace(gopage);
               }
@@ -75,12 +74,7 @@
       getCaptcha(){
 
       }
-    },computed:{
-      // 验证手机号码是否正确
-      phoneRight(){
-        return /^[1][3,4,5,7,8][0-9]{9}$/.test(this.phone)
-      }
-    },
+    }
   }
 
 </script>
