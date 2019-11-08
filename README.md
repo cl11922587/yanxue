@@ -29,17 +29,3 @@ npm test
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-
-## 引入插件
-
-1.MuseUI
-npm i muse-ui -S
-
-2. muse-ui-loading
-npm install -S muse-ui-loading
-
-3. muse-ui-toast
-npm install muse-ui-toast -S
-
-4. muse-ui-message
-npm install -S muse-ui-message
