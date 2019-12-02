@@ -3,7 +3,7 @@
     <!--用户-->
     <van-cell-group>
       <van-cell
-        style="background-color: #008800;color:#FFF; padding-top: 2.6rem;"
+        style="background-color: #1989fa;color:#FFF; padding-top: 2.6rem;"
         label-class="labelClass"
         is-link
         :center=true
@@ -53,8 +53,6 @@
     <transition name="router-slider" mode="out-in">
       <router-view></router-view>
     </transition>
-    <FooterTab activeItem="2"></FooterTab>
-
   </div>
   <Login v-else/>
 

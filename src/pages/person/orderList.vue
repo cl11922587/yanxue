@@ -6,7 +6,7 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <OrderCard  v-for="(item,index) in orderList" v-bind:orderInfo ="item"></OrderCard>
+      <OrderCard  v-for="(item,index) in orderList" v-bind:orderInfo ="item" :key="item.id"></OrderCard>
     </van-list>
   </div>
 </template>

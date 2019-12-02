@@ -22,20 +22,23 @@
       }
     },
     created(){
-      this.getNewLits();
+      this.getNewLits()
     },
     methods:{
       async getNewLits (){
-        var _this =this;
-        await  getDate.getNewDetail({id:this.$route.params.id},function(e){
+        await  getDate.getNewDetail({id:this.$route.params.id},(e)=>{
           if(e.success){
-            _this.newsInfo = e.data.results;
+            this.newsInfo = e.data.results;
           }
-
-        },function(){
-
+        },()=>{
         })
-      }
+      },
+      // async getReader(){
+      //   await getDate.ReaderNews({id:this.$route.params.id},()=>{
+      //
+      //   },()=>{
+      //   })
+      // }
 
 
     }
@@ -43,12 +46,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  body{
-    margin:0;
-    padding: 0;
-    background: #fff!important;
-  }
+<style >
   .news-box{
    padding: 10px;
    background: #fff;
@@ -65,6 +63,12 @@
   }
   .news-content{
     margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .news-content img{
+    width: 100%;
+    height: auto;
   }
   .news-ready{
     clear: both;

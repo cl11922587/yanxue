@@ -1,23 +1,26 @@
 <template>
   <div >
+
     <ProductImg v-bind:imgdata = "proInfo.imgArray"></ProductImg>
-    <div class="p-info mgb10">
+    <div class="p-d-info mgb10">
       <h2>{{proInfo.name}}</h2>
-      <div class="p-desc"><span class="em" v-for="(pds,key) in JSON.parse(proInfo.desc||'{}')">{{pds}}</span></div>
-      <div class="p-price"><span class="font12">￥</span>{{proInfo.price | priceDoubel}}</div>
+      <div class="p-d-desc"><span class="em" v-for="(pds,key) in JSON.parse(proInfo.desc||'{}')">{{pds}}</span></div>
+      <div class="p-d-price"><span class="font12">￥</span>{{proInfo.price | priceDoubel}}</div>
     </div>
-    <div class="p-quality mgb10">
+    <div class="p-d-quality mgb10">
       <ul>
         <li v-for="(item,key) in JSON.parse(proInfo.quality||'{}')">●&nbsp;{{item.val}}</li>
       </ul>
     </div>
-    <div class="p-content mgb60" v-html="proInfo.content||''">
+    <div class="p-d-content mgb60" v-html="proInfo.content||''">
     </div>
 
     <van-goods-action>
       <van-goods-action-icon icon="chat-o" text="客服"  url="tel:8852252" />
       <van-goods-action-button type="danger" text="立即预订" @click="goOrder(proInfo)" />
     </van-goods-action>
+    <Bgloding :show="show"></Bgloding>
+
   </div>
 </template>
 
@@ -31,7 +34,8 @@
     data() {
       return {
         proInfo: {},
-        msg: ''
+        msg: '',
+        show:true
       }
     },
     computed: {
@@ -44,6 +48,7 @@
         getProductInfo() {
         getDate.getProDetail({id:this.$route.params.id},(e)=>{
            if(e.success){
+             this.show =false;
              this.proInfo =e.data.results;
            }
          },(e)=>{
@@ -65,11 +70,9 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
- body{
-   margin: 0;
- }
- .p-info{
+<style >
+
+ .p-d-info{
    padding: 10px;
    max-height:105px;
    text-align: left;
@@ -77,24 +80,24 @@
    line-height: 20px;
    background: #fff;
  }
- .p-info h2{
+ .p-d-info h2{
    font-size: 16px;
    margin: 0 0 5px 0;
    line-height: 24px;
    width: 100%;
    overflow: hidden;
  }
- .p-price{
+ .p-d-price{
    position: absolute;
    bottom: 10px;
    right:10px;
    color:#ff0000;
    font-size: 18px;
  }
- .p-desc{
+ .p-d-desc{
 
  }
- .p-desc .em{
+ .p-d-desc .em{
    font-size: 12px;
    background: #ff6600;
    color:#fff;
@@ -104,18 +107,21 @@
    margin: 0 3px;
    border-radius: 3px;
  }
-  .p-quality,.p-content{
+  .p-d-quality,.p-d-content{
     padding: 10px;
     background: #fff;
   }
-  .p-quality li{
+  .p-d-quality li{
     text-align: left;
     color:#333;
     font-size: 14px;
     line-height: 25px;
   }
-  .p-content{
+  .p-d-content{
       color:#333;
      text-align: left;
   }
+ .p-d-content img{
+   width: 100%;
+ }
 </style>

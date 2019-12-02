@@ -26,23 +26,23 @@
       <div class="step-box">
         <van-steps direction="vertical" :active="orderInfo.state-1">
           <van-step>
-            <h3>下单时间</h3>
+            <h3 class="font14">下单时间</h3>
             <p>{{orderInfo.createTime  | forMat}}</p>
           </van-step>
           <van-step>
-            <h3>支付时间</h3>
+            <h3  class="font14">支付时间</h3>
             <p>{{orderInfo.payTime? (orderInfo.payTime | forMat) :''}}</p>
           </van-step>
           <van-step>
-            <h3>出行时间</h3>
+            <h3  class="font14">出行时间</h3>
             <p>{{orderInfo.travelTime? (orderInfo.travelTime | forMat) :''}}</p>
           </van-step>
           <van-step v-if="orderInfo.state==4">
-            <h3>退款时间</h3>
+            <h3  class="font14">退款时间</h3>
             <p>{{orderInfo.blackTime? (orderInfo.blackTime | forMat) :''}}</p>
           </van-step>
           <van-step>
-            <h3>完成时间</h3>
+            <h3  class="font14">完成时间</h3>
             <p>{{orderInfo.orderComTime? (orderInfo.orderComTime | forMat) :''}}</p>
           </van-step>
         </van-steps>

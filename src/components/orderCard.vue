@@ -8,7 +8,7 @@
       </div>
       <div class="p-info">
         <h2>{{orderInfo.pname}}</h2>
-        <div class="p-desc">X{{orderInfo.num}}</div>
+        <div class="p-desc">*{{orderInfo.num}}</div>
         <div class="p-price"><span class="font12">￥</span>{{orderInfo.total | priceDoubel}}</div>
       </div>
     </div>
@@ -33,9 +33,11 @@
     right: 10px ; bottom: 12px;
   }
   .order-no{
-    background: #fff;
+    font-size: 12px;
+    background: #1989fa;
     padding: 10px;
     text-align: left;
+    color:#fff;
   }
   .order-status{
     background: #fff;
@@ -86,7 +88,7 @@
     font-size: 18px;
   }
   .p-desc{
-
+    font-size: 12px;
   }
   .p-desc .em{
     font-size: 12px;

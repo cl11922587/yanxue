@@ -32,7 +32,7 @@ const router= new Router({
       redirect: {
         name: 'Index'
       },
-      meta: { title: "研学首页" },
+      meta: { title: "研学首页" ,  keepAlive: true,showFooter:true},
       // beforeEnter:function(to,from,next){
       //     console.log(444);
       //
@@ -47,56 +47,56 @@ const router= new Router({
       path: '/index',
       name: 'Index',
       component: Index,
-      meta: { title: "研学首页" },
-      beforeEnter:function(to,from,next){
-        next();
-      },
-      beforeRouteEnter:function(to,from,next){
-        next();
-      }
+      meta: { title: "研学首页",  keepAlive: true,showFooter:true },
+      // beforeEnter:function(to,from,next){
+      //   next();
+      // },
+      // beforeRouteEnter:function(to,from,next){
+      //   next();
+      // }
     },
     {
       path: '/product/:id',
       name: 'product',
       component: product ,
-      meta: { title: "研学产品详情" },
+      meta: { title: "研学产品详情",  keepAlive: false ,showFooter:false },
     },{
       path: '/order/:id',
       name: 'order',
       component: order,
-       meta: { title: "研学提交订单" },
+       meta: { title: "研学提交订单",  keepAlive: false,showFooter:false },
     },{
       path: '/newsList',
       name: 'newsList',
       component: newsList,
-      meta: { title: "研学新闻列表" },
+      meta: { title: "研学新闻列表" ,  keepAlive: true,showFooter:true},
     },
     {
       path: '/news/:id',
       name: 'news',
       component: news,
-      meta: { title: "研学新闻详情" },
+      meta: { title: "研学新闻详情",  keepAlive: false,showFooter:false},
     },{
       path: '/person',
       name: 'person',
       component: person,
-      meta: { title: "研学个人中心" },
+      meta: { title: "研学个人中心",  keepAlive: false ,showFooter:true},
     },{
       path: '/orderList',
       name: 'orderList',
       component: orderList,
-      meta: { title: "研学订单列表" },
+      meta: { title: "研学订单列表" ,  keepAlive: false,showFooter:false },
     },{
       path: '/orderDetail/:id',
       name: 'orderDetail',
       component: orderDetail,
-      meta: { title: "研学订单详情" },
+      meta: { title: "研学订单详情" ,  keepAlive: false,showFooter:false},
     }
     ,{
       path: '/login',
       name: 'login',
       component: login,
-      meta: { title: "登录" },
+      meta: { title: "登录" ,  keepAlive: false,showFooter:false},
     }
   ]
 });

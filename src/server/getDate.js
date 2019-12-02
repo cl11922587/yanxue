@@ -58,6 +58,20 @@ export  default {
     },(e)=>{
       exception(e)
     })
-  }
+  },
+  getSearchProduct(data,response,exception){
+    http.get(api.index.searchProduct + '?keyWord=' + data.keyWord + '&page=' + data.page,(e)=>{
+      response(e);
+    },(e)=>{
+      exception(e)
+    })
+  },
+  ReaderNews(data,response,exception){
+    http.get(api.index.readyNews + '?id=' + data.id,(e)=>{
+      response(e);
+    },(e)=>{
+      exception(e)
+    })
+  },
 }
 

@@ -21,6 +21,12 @@ var orderStatus =function (value) {
   }
 };
 
+var sizeColor = function(value,size){
+  var reg = new RegExp(size, "g");
+  return value.replace(reg,'<span class="red">'+size+'</span>');
+
+};
+
 var trimStr =function(value,trim){
   // trim 1为所有空格， 2前后空格，3前空格，4后空格
   if(!value && typeof value !=="string") {
@@ -49,5 +55,6 @@ export default {
   priceDoubel,
   orderStatus,
   trimStr,
+  sizeColor,
   forMat
 };

@@ -11,7 +11,6 @@ import directives from './directives/index.js';
 import Vuex from 'vuex'
 import store from './vuex/index'
 
-
 Vue.config.productionTip = false;
 //全局注册所有过滤器
 Object.keys(filters).forEach((key) => {

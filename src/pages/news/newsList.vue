@@ -1,100 +1,120 @@
 <template>
-  <div >
-    <Footer-Tab activeItem="1"></Footer-Tab>
-
-    <van-tabs v-model="active" animated>
-      <van-tab title="全部">
-        <NewsCard  v-bind:guoneiData ="guoneiData"></NewsCard>
-      </van-tab>
-      <van-tab title="政策">
-        <NewsCard  v-bind:guoneiData ="guoneiData"></NewsCard>
-      </van-tab>
-      <van-tab title="往期记录">
-        <NewsCard  v-bind:guoneiData ="guoneiData2"></NewsCard>
-      </van-tab>
-    </van-tabs>
+  <div>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <van-tabs v-model="active" animated>
+        <van-tab title="热门新闻">
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="onLoad"
+          >
+            <NewsCard v-bind:guoneiData="guoneiData"></NewsCard>
+          </van-list>
+        </van-tab>
+      </van-tabs>
+    </van-pull-refresh>
+    <Bgloding :show="show"></Bgloding>
   </div>
 </template>
 
 
 <script>
   // import  {getNewLit} from '../../../sever/getDate' //加载静态数据
-  import  getDate from '../../server/getDate'
+  import getDate from '../../server/getDate'
 
   export default {
     name: 'newsList',
-    components:{
-
+    components: {},
+    mounted() {
     },
-    mounted(){
-      // NewList().then(res=>{
-      //   res.data.forEach((key)=>{
-      //     this.guoneiData.push(key);
-      //     this.guoneiData2.push(key)
-      //   });
-      // }).catch(err=>{
-      //
-      // })
+    created() {
     },
-    created(){
-      this.getNewLits();
-    },
-    data () {
+    data() {
       return {
-        active:0,
+        active: 0,
         msg: '',
-        selected:0,
-        guoneiData:[],
-        guoneiData2:[],
-        guoneiData3:[],
-        loadings:true,
+        selected: 0,
+        limit: 10,
+        page: 0,
+        ptype: 1,
+        guoneiData: [],
+        loadings: true,
+        loading: false,
+        finished: false,
+        isLoading: false,
+        total:11,
+        show:true
       }
     },
-    methods:{
-      getNewLits(){
-        var _this =this;
-        getDate.getNewLit({type:1,page:1,limit:10},function(e){
-            if(e.success){
-              e.data.results.forEach((key)=>{
-                _this.guoneiData.push(key);
-                _this.guoneiData2.push(key);
-                _this.loadings=false;
-              })
-            }
-        },function (e) {
-          _this.loadings=false;
+    methods: {
+      getNewLits(limit, page, type) {
+        getDate.getNewLit({limit: limit, page: page,type:type}, (response) => {
+          if (response.success) {
+            this.guoneiData.push(...response.data.results.rows);
+            this.loadings = false;
+            this.show =false;
+            this.total=response.data.results.count;
+          }
+        }, () => {
+          this.loadings = false;
         })
 
       },
-      loading () {
-
+      onRefresh() {
+        setTimeout(() => {
+          this.guoneiData.splice(0, this.guoneiData.length);
+          this.page = 1;
+          this.$toast('刷新成功');
+          this.isLoading = false;
+          this.getNewLits(this.limit, this.page, this.ptype);
+          this.finished = false;
+        }, 1000)
+      },
+      onLoad() {
+        if (this.total > this.page * this.limit) {
+          this.page++;
+          if (this.page == 1) {
+            this.getNewLits(this.limit, this.page, this.ptype);
+            this.loading = false;
+          } else {
+            setTimeout(() => {
+              this.getNewLits(this.limit, this.page, this.ptype);
+              this.loading = false;
+            }, 1000)
+          }
+        }
       }
-
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  body{
-    margin:0;
+  body {
+    margin: 0;
     padding: 0;
   }
+
   h1, h2 {
     font-weight: normal;
   }
+
   ul {
     list-style-type: none;
     padding: 0;
   }
+
   li {
     display: inline-block;
     margin: 0 10px;
   }
+
   a {
     color: #42b983;
   }
-  .font12{
+
+  .font12 {
     font-size: 12px;
   }
 </style>

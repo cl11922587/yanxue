@@ -72,9 +72,11 @@ ul,li,ol{
 }
 .db{display: block}
 .c-ff6600{color:#ff6600}
+.red{color:#ff6600;}
 .c-666{color:#666;}
 .font12{font-size: 12px}
 .font14{font-size: 14px}
+.font16{font-size: 16px}
 .bold{font-weight: bold;}
 .bor1-ccc{border-bottom: 1px solid #ccc;}
 .bor1-e6e6e6{border-bottom: 1px solid #e6e6e6;}

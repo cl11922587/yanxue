@@ -25,10 +25,9 @@ axios.interceptors.request.use(function(config) {
 function handleResults (response) {
   let remoteResponse = response.data;
   var result = {
+    code:remoteResponse.code,
     success: false,
-    message: remoteResponse.desc,
-    status: [],
-    errorCode: '',
+    message: remoteResponse.msg,
     data: {
       total: 0,
       results: []
@@ -38,14 +37,6 @@ function handleResults (response) {
     result.data.results = remoteResponse.data
     result.data.total = remoteResponse.total
     result.success = true
-  }
-  if (!remoteResponse.success) {
-    let code = remoteResponse.errorCode
-    if (code === 400) {
-      console.log('传参错误')
-    }
-    result.errorCode = remoteResponse.errorCode
-    result.message = remoteResponse.desc
   }
   return result
 }
